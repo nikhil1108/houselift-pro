@@ -254,8 +254,7 @@ export default function ScrolableAnimation() {
       ref={rootRef}
       id="simulator"
       aria-label="Raise, move and protect — how a building is elevated"
-      className="relative w-full max-w-full overflow-hidden"
-      style={{ height: "min(500vh, 5000px)" }}
+      className="relative w-full max-w-full overflow-hidden h-[260vh] sm:h-[min(500vh,5000px)]"
     >
       <div ref={pinRef} className="relative h-screen w-full max-w-full overflow-hidden">
         {/* Stage / progress label */}
@@ -274,13 +273,13 @@ export default function ScrolableAnimation() {
         </div>
 
         {/* Building scene */}
-        <div className="absolute inset-0 grid place-items-center px-4 overflow-hidden w-full max-w-full min-w-0">
+        <div className="absolute inset-0 grid place-items-center px-4 pb-20 sm:pb-0 overflow-hidden w-full max-w-full min-w-0">
           <BuildingScene ref={sceneRef} className="h-auto w-full max-w-[900px] min-w-0" />
         </div>
 
         {/* Captions — cross-faded; only the active one is shown to AT */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-10 z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative min-h-[132px] w-full max-w-xl">
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-10 z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative min-h-[105px] sm:min-h-[132px] w-full max-w-xl">
             {STAGES.map((s, i) => (
               <div
                 key={s.id}
@@ -291,13 +290,13 @@ export default function ScrolableAnimation() {
                   transform: i === active ? "translateY(0)" : "translateY(12px)",
                 }}
               >
-                <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700">
+                <p className="font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700">
                   {s.label}
                 </p>
-                <h3 className="mt-2 text-balance text-2xl font-bold leading-[1.15] tracking-tight text-ink sm:text-3xl">
+                <h3 className="mt-1.5 sm:mt-2 text-balance text-lg font-bold leading-[1.15] tracking-tight text-ink sm:text-2xl lg:text-3xl">
                   {s.title}
                 </h3>
-                <p className="mt-2.5 max-w-md text-pretty text-base leading-relaxed text-ink-muted">
+                <p className="mt-1.5 sm:mt-2.5 max-w-md text-pretty text-xs sm:text-base leading-relaxed text-ink-muted">
                   {s.text}
                 </p>
               </div>
@@ -306,13 +305,13 @@ export default function ScrolableAnimation() {
 
           {/* Result-stage CTAs */}
           <div
-            className="mt-4 flex flex-wrap gap-3 transition-opacity duration-500"
+            className="mt-3 sm:mt-4 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3 transition-opacity duration-500"
             style={{
               opacity: active === STAGES.length - 1 ? 1 : 0,
               pointerEvents: active === STAGES.length - 1 ? "auto" : "none",
             }}
           >
-            <Button asChild>
+            <Button asChild className="w-full sm:w-auto">
               <a
                 href="#quote"
                 tabIndex={active === STAGES.length - 1 ? undefined : -1}
@@ -325,7 +324,7 @@ export default function ScrolableAnimation() {
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="w-full sm:w-auto">
               <a
                 href="#gallery"
                 tabIndex={active === STAGES.length - 1 ? undefined : -1}

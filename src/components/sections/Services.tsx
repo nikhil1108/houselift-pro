@@ -22,7 +22,7 @@ export function Services(): JSX.Element {
   return (
     <section
       id="services"
-      className="relative border-b border-slate-200 bg-canvas py-20 lg:py-28"
+      className="relative border-b border-slate-200 bg-canvas py-12 sm:py-16 lg:py-28"
     >
       <div aria-hidden className="bg-engineering-grid pointer-events-none absolute inset-0" />
 
@@ -39,7 +39,7 @@ export function Services(): JSX.Element {
         {/* `perspective` on the wrapper is what makes the per-card rotate read as
             depth rather than as a skew. */}
         <div
-          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-8 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
           style={{ perspective: "1200px" }}
         >
           {SERVICES.map((service, index) => {
@@ -48,11 +48,11 @@ export function Services(): JSX.Element {
 
             return (
               <Reveal key={service.id} delayMs={index * 70} className="h-full">
-                <article className="card-3d group flex h-full flex-col rounded-xl border border-slate-200/80 bg-white p-6 shadow-sm">
+                <article className="card-3d group flex h-full flex-col rounded-xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-sm">
                   <div className="flex items-start justify-between">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-50 ring-1 ring-inset ring-amber-100 transition-colors duration-300 group-hover:bg-amber-600 group-hover:ring-amber-600">
+                    <span className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-amber-50 ring-1 ring-inset ring-amber-100 transition-colors duration-300 group-hover:bg-amber-600 group-hover:ring-amber-600">
                       <Icon
-                        className="h-6 w-6 text-amber-600 transition-colors duration-300 group-hover:text-white"
+                        className="h-5 w-5 sm:h-6 sm:w-6 text-amber-600 transition-colors duration-300 group-hover:text-white"
                         aria-hidden
                       />
                     </span>
@@ -61,15 +61,15 @@ export function Services(): JSX.Element {
                     </span>
                   </div>
 
-                  <h3 className="mt-5 text-lg font-semibold leading-snug tracking-tight text-ink">
+                  <h3 className="mt-4 sm:mt-5 text-base sm:text-lg font-semibold leading-snug tracking-tight text-ink">
                     {service.title}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-ink-muted">
                     {service.description}
                   </p>
 
-                  <ul className="mt-5 space-y-2 border-t border-slate-100 pt-5">
+                  <ul className="mt-4 sm:mt-5 space-y-1.5 sm:space-y-2 border-t border-slate-100 pt-4 sm:pt-5">
                     {service.features.map((feature) => (
                       <li
                         key={feature}
@@ -84,7 +84,7 @@ export function Services(): JSX.Element {
                     ))}
                   </ul>
 
-                  <div className="mt-auto flex items-end justify-between gap-3 pt-6">
+                  <div className="mt-auto flex items-end justify-between gap-2 sm:gap-3 pt-4 sm:pt-6">
                     {capability ? (
                       <p className="leading-none">
                         <span className="font-mono text-xl font-bold text-hydraulic-700">
@@ -99,7 +99,7 @@ export function Services(): JSX.Element {
                     <button
                       type="button"
                       onClick={() => scrollToAnchor("#quote")}
-                      className="inline-flex items-center gap-1 rounded text-xs font-semibold text-slate-500 transition-colors hover:text-amber-700 group-hover:text-amber-700"
+                      className="inline-flex items-center gap-1 rounded text-xs font-semibold text-slate-500 transition-colors hover:text-amber-700 group-hover:text-amber-700 py-2 sm:py-0 touch-manipulation"
                     >
                       Enquire
                       <ArrowUpRight className="h-3.5 w-3.5" />

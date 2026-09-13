@@ -804,23 +804,23 @@ export function StiltParkingClip({ onProgress }: StiltParkingClipProps): JSX.Ele
         </svg>
 
         {/* ---------- Caption ---------- */}
-        <div className="pointer-events-none absolute left-4 top-4 max-w-[19rem]">
-          <span className="inline-flex rounded bg-slate-950/85 px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wider text-white shadow-md backdrop-blur-sm">
+        <div className="pointer-events-none absolute left-3 top-3 sm:left-4 sm:top-4 max-w-[calc(100%-1.5rem)] sm:max-w-[19rem]">
+          <span className="inline-flex rounded bg-slate-950/85 px-2.5 py-1 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md backdrop-blur-sm">
             {current.label}
           </span>
-          <p className="mt-2 rounded bg-white/80 px-2.5 py-2 text-[13px] leading-snug text-ink shadow-sm backdrop-blur-sm">
+          <p className="mt-1.5 sm:mt-2 rounded bg-white/80 px-2.5 py-1.5 sm:py-2 text-xs sm:text-[13px] leading-snug text-ink shadow-sm backdrop-blur-sm">
             {current.text}
           </p>
         </div>
 
         {/* ---------- Transport ---------- */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 via-slate-950/50 to-transparent px-4 pb-4 pt-12">
-          <div className="flex items-center gap-3">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 via-slate-950/50 to-transparent px-3 sm:px-4 pb-3 sm:pb-4 pt-10 sm:pt-12">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <button
               type="button"
               onClick={() => setPlaying((value) => !value)}
               aria-label={isPlaying ? "Pause the sequence" : "Play the sequence"}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-600 text-white shadow-md transition-colors hover:bg-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="flex h-10 w-10 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full bg-amber-600 text-white shadow-md transition-colors hover:bg-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               {isPlaying ? (
                 <Pause className="h-4 w-4 fill-current" />
@@ -833,7 +833,7 @@ export function StiltParkingClip({ onProgress }: StiltParkingClipProps): JSX.Ele
               type="button"
               onClick={restart}
               aria-label="Restart the sequence"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="flex h-10 w-10 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               <RotateCcw className="h-4 w-4" />
             </button>
@@ -852,7 +852,7 @@ export function StiltParkingClip({ onProgress }: StiltParkingClipProps): JSX.Ele
               onPointerUp={handleScrubUp}
               onPointerCancel={handleScrubUp}
               onKeyDown={handleScrubKey}
-              className="group relative h-6 flex-1 cursor-pointer touch-none focus-visible:outline-none"
+              className="group relative h-8 sm:h-6 flex-1 cursor-pointer touch-none focus-visible:outline-none"
             >
               <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 overflow-hidden rounded-full bg-white/25 ring-white/70 group-focus-visible:ring-2">
                 <div ref={barRef} className="h-full rounded-full bg-amber-500" style={{ width: "0%" }} />

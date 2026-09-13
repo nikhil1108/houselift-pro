@@ -66,8 +66,8 @@ export function Hero(): JSX.Element {
         className="bg-engineering-grid-inverse pointer-events-none absolute inset-0 -z-10"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-14 sm:px-6 sm:pt-20 lg:px-8 lg:pb-28 lg:pt-24">
-        <div className="grid items-start gap-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+      <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pt-20 sm:pb-20 lg:px-8 lg:pb-28 lg:pt-24">
+        <div className="grid items-start gap-10 sm:gap-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
           {/* Copy column */}
           <div className="parallax-fg">
             <Reveal>
@@ -164,19 +164,19 @@ export function Hero(): JSX.Element {
           {/* Trust badge stack — frosted glass, so the photograph stays visible
               through it rather than being boxed out by a solid card. */}
           <Reveal delayMs={180} className="lg:pt-6">
-            <div className="glass-panel rounded-xl border border-white/15 p-6 shadow-2xl sm:p-8">
+            <div className="glass-panel rounded-xl border border-white/15 p-4 shadow-2xl sm:p-8">
               <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-400">
                 Verified track record
               </p>
 
-              <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-white/15">
+              <dl className="mt-5 sm:mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-white/15">
                 {TRUST_BADGES.map((badge) => (
-                  <div key={badge.label} className="bg-ink/55 px-4 py-5">
-                    <dd className="font-mono text-2xl font-bold tracking-tight text-white sm:text-[1.75rem]">
+                  <div key={badge.label} className="bg-ink/55 p-3.5 xs:px-4 xs:py-5">
+                    <dd className="font-mono text-xl sm:text-[1.75rem] font-bold tracking-tight text-white">
                       <Counter target={badge.value} />
                       <span className="text-amber-400">{badge.suffix}</span>
                     </dd>
-                    <dt className="mt-1.5 text-xs leading-snug text-slate-300">
+                    <dt className="mt-1 sm:mt-1.5 text-xs leading-snug text-slate-300">
                       {badge.label}
                     </dt>
                   </div>

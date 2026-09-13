@@ -117,9 +117,9 @@ export function PresenceMap(): JSX.Element {
                   onMouseLeave={() => setActiveId(null)}
                   onFocus={() => setActiveId(city.id)}
                   onBlur={() => setActiveId(null)}
-                  /* Hit area is 32px square for touch, centred on the pin,
+                  /* Hit area is 40px on touch devices, centred on the pin,
                      while the visible dot stays small. */
-                  className="absolute left-0 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                  className="absolute left-0 top-0 flex h-10 w-10 sm:h-8 sm:w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-amber-500 touch-manipulation"
                 >
                   {city.hq ? (
                     <span

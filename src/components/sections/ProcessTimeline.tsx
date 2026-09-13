@@ -426,7 +426,7 @@ export function ProcessTimeline(): JSX.Element {
     >
       <div
         ref={pinRef}
-        className="relative flex h-screen w-full max-w-full flex-col justify-center overflow-hidden py-4 sm:py-6 lg:py-8"
+        className="relative flex h-screen w-full max-w-full flex-col justify-center overflow-hidden py-2 sm:py-6 lg:py-8"
       >
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
@@ -434,13 +434,14 @@ export function ProcessTimeline(): JSX.Element {
             title="Five-stage engineering sequence"
             description="Scroll to advance through each stage — the blueprint and engineering cards update in lockstep as each phase progresses."
             centered
+            className="[&_h2]:text-xl sm:[&_h2]:text-4xl [&_p.mt-4]:hidden sm:[&_p.mt-4]:block [&_p.mb-3]:mb-1 sm:[&_p.mb-3]:mb-3"
           />
 
-          <div className="mt-6 grid items-center gap-6 sm:mt-8 sm:gap-8 lg:mt-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+          <div className="mt-3 grid items-center gap-3 xs:gap-4 sm:mt-8 sm:gap-8 lg:mt-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
             {/* Left: Live Blueprint */}
             <div className="flex flex-col">
-              <div className="mx-auto w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-3 shadow-panel sm:p-4 lg:max-w-none">
-                <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
+              <div className="mx-auto w-full max-w-lg overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200/90 bg-white p-2.5 sm:p-4 shadow-panel lg:max-w-none">
+                <div className="mb-1.5 sm:mb-2 flex items-center justify-between border-b border-slate-100 pb-1.5 sm:pb-2">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
@@ -458,7 +459,7 @@ export function ProcessTimeline(): JSX.Element {
               </div>
 
               {/* Interactive Stage scrubber pills */}
-              <div className="mt-3.5 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:justify-start">
+              <div className="mt-2.5 sm:mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:justify-start">
                 {PROCESS_STEPS.map((step, index) => (
                   <button
                     key={`pill-${step.id}`}
@@ -466,7 +467,7 @@ export function ProcessTimeline(): JSX.Element {
                     onClick={() => jumpToStep(index)}
                     aria-label={`Jump to stage ${index + 1}: ${step.title}`}
                     className={cn(
-                      "rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition-all duration-200 sm:px-3 sm:py-1.5",
+                      "rounded-lg px-2.5 py-1 font-mono text-[11px] font-semibold transition-all duration-200 sm:px-3 sm:py-1.5 sm:text-xs",
                       activeIndex === index
                         ? "bg-amber-600 text-white shadow-md shadow-amber-600/20 scale-105"
                         : "border border-slate-200/80 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50",
@@ -481,7 +482,7 @@ export function ProcessTimeline(): JSX.Element {
             {/* Right: ONLY ONE STEP CARD COMES AT ONCE! */}
             <div className="relative flex flex-col justify-center">
               {/* Animated Card Viewport */}
-              <div className="relative h-[340px] sm:h-[360px] md:h-[380px] w-full max-w-xl mx-auto lg:max-w-none">
+              <div className="relative h-[295px] xs:h-[310px] sm:h-[360px] md:h-[380px] w-full max-w-xl mx-auto lg:max-w-none">
                 {PROCESS_STEPS.map((step, index) => {
                   const isActive = activeIndex === index;
                   const isPast = activeIndex > index;
@@ -492,7 +493,7 @@ export function ProcessTimeline(): JSX.Element {
                       id={`step-${step.id}`}
                       aria-hidden={!isActive}
                       className={cn(
-                        "absolute inset-0 flex flex-col justify-between rounded-2xl border bg-white p-5 sm:p-7 shadow-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                        "absolute inset-0 flex flex-col justify-between rounded-xl sm:rounded-2xl border bg-white p-3.5 xs:p-4 sm:p-7 shadow-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
                         isActive
                           ? "z-10 opacity-100 translate-y-0 scale-100 border-amber-500/90 ring-4 ring-amber-500/10 pointer-events-auto"
                           : isPast
@@ -501,41 +502,41 @@ export function ProcessTimeline(): JSX.Element {
                       )}
                     >
                       <div>
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-3.5">
-                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 font-mono text-base font-bold text-white shadow-md shadow-amber-500/30">
+                        <div className="flex items-start justify-between gap-3 sm:gap-4">
+                          <div className="flex items-start gap-2.5 sm:gap-3.5">
+                            <span className="flex h-8 w-8 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 font-mono text-xs sm:text-base font-bold text-white shadow-md shadow-amber-500/30">
                               {String(index + 1).padStart(2, "0")}
                             </span>
 
                             <div>
-                              <h3 className="text-lg font-bold leading-snug tracking-tight text-ink sm:text-xl md:text-2xl">
+                              <h3 className="text-sm font-bold leading-tight tracking-tight text-ink sm:text-xl md:text-2xl">
                                 {step.title}
                               </h3>
-                              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-700 sm:text-xs">
+                              <p className="mt-0.5 sm:mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-700 sm:text-xs">
                                 {step.subtitle}
                               </p>
                             </div>
                           </div>
 
-                          <Badge variant="accent" className="shrink-0">
+                          <Badge variant="accent" className="shrink-0 text-[10px] sm:text-xs">
                             {step.badge}
                           </Badge>
                         </div>
 
-                        <p className="mt-4 text-xs sm:text-sm md:text-base leading-relaxed text-slate-700">
+                        <p className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base leading-relaxed text-slate-700 line-clamp-3 sm:line-clamp-none">
                           {step.description}
                         </p>
 
-                        <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-50/50 p-3 sm:p-3.5">
-                          <p className="flex items-start gap-2 font-mono text-[11px] sm:text-xs leading-relaxed text-slate-700">
-                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                        <div className="mt-2 sm:mt-4 rounded-lg sm:rounded-xl border border-amber-500/20 bg-amber-50/50 p-2 sm:p-3.5">
+                          <p className="flex items-start gap-1.5 sm:gap-2 font-mono text-[10px] sm:text-xs leading-relaxed text-slate-700">
+                            <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-emerald-600" />
                             <span>{step.technicalDetail}</span>
                           </p>
                         </div>
                       </div>
 
                       {/* Card Footer: Step dots and Prev/Next navigation */}
-                      <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 sm:pt-4">
+                      <div className="mt-2 sm:mt-4 flex items-center justify-between border-t border-slate-100 pt-2 sm:pt-4">
                         <div className="flex items-center gap-1.5">
                           {PROCESS_STEPS.map((_, dotIdx) => (
                             <button
@@ -551,18 +552,18 @@ export function ProcessTimeline(): JSX.Element {
                               )}
                             />
                           ))}
-                          <span className="ml-2 font-mono text-[11px] font-semibold text-slate-500 sm:text-xs">
+                          <span className="ml-2 font-mono text-[10px] font-semibold text-slate-500 sm:text-xs">
                             {activeIndex + 1} / {PROCESS_STEPS.length}
                           </span>
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
                           <Button
                             variant="ghost"
                             size="sm"
                             disabled={activeIndex === 0}
                             onClick={() => jumpToStep(activeIndex - 1)}
-                            className="h-8 px-2 text-xs"
+                            className="h-7 sm:h-8 px-2 text-xs"
                           >
                             <ChevronLeft className="h-4 w-4 mr-0.5" />
                             Prev
@@ -572,7 +573,7 @@ export function ProcessTimeline(): JSX.Element {
                             size="sm"
                             disabled={activeIndex === PROCESS_STEPS.length - 1}
                             onClick={() => jumpToStep(activeIndex + 1)}
-                            className="h-8 px-2.5 text-xs font-medium border-amber-500/40 text-amber-900 hover:bg-amber-50"
+                            className="h-7 sm:h-8 px-2.5 text-xs font-medium border-amber-500/40 text-amber-900 hover:bg-amber-50"
                           >
                             Next
                             <ChevronRight className="h-4 w-4 ml-0.5" />
@@ -584,7 +585,7 @@ export function ProcessTimeline(): JSX.Element {
                 })}
               </div>
 
-              <p className="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-slate-500 sm:justify-start">
+              <p className="mt-2 sm:mt-4 hidden xs:flex items-center justify-center gap-2 font-mono text-xs text-slate-500 sm:justify-start">
                 <Ruler className="h-3.5 w-3.5 text-hydraulic-600" />
                 Typical 30-day programme · longer for multi-storey commercial
               </p>

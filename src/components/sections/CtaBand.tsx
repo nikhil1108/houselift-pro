@@ -31,12 +31,12 @@ export function CtaBand(): JSX.Element {
           settlement, and hands you a fixed-price proposal in 48 hours.
         </p>
 
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <Button size="lg" onClick={() => scrollTo("#quote")}>
+        <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Button size="lg" onClick={() => scrollTo("#quote")} className="w-full sm:w-auto">
             Get My Free Estimate
             <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button variant="outline" size="lg" asChild>
+          <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
             <a href={`tel:${CONTACT_INFO.phonePrimary.replace(/\s/g, "")}`}>
               <PhoneCall className="h-4 w-4" />
               {CONTACT_INFO.phonePrimary}

@@ -75,10 +75,10 @@ export function Footer(): JSX.Element {
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1.3fr]">
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.3fr] gap-8 sm:gap-10 lg:gap-12">
           {/* Brand */}
-          <div>
+          <div className="xs:col-span-2 sm:col-span-1 lg:col-span-1">
             <div className="flex items-center gap-3">
               <LogoMark onDark size="md" />
               <span className="flex flex-col leading-tight">
@@ -213,7 +213,7 @@ export function Footer(): JSX.Element {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="xs:col-span-2 sm:col-span-1 lg:col-span-1">
             <h2 className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-500">
               Direct Contact
             </h2>

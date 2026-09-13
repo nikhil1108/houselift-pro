@@ -92,7 +92,7 @@ export function StiltParking(): JSX.Element {
   return (
     <section
       id="stilt-parking"
-      className="relative overflow-hidden border-b border-slate-200 bg-white py-20 lg:py-28"
+      className="relative overflow-hidden border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -104,7 +104,7 @@ export function StiltParking(): JSX.Element {
           />
         </Reveal>
 
-        <div className="mt-14 grid items-start gap-8 lg:grid-cols-[1.6fr_1fr] lg:gap-12">
+        <div className="mt-8 sm:mt-14 grid items-start gap-8 lg:grid-cols-[1.6fr_1fr] lg:gap-12">
           <Reveal>
             <StiltParkingClip onProgress={handleProgress} />
             <p className="mt-4 flex items-center gap-2 font-mono text-xs text-slate-500">
@@ -114,7 +114,7 @@ export function StiltParking(): JSX.Element {
           </Reveal>
 
           <Reveal delayMs={120}>
-            <div className="rounded-xl border border-slate-200/80 bg-ink p-6 text-slate-300 shadow-lg sm:p-7">
+            <div className="rounded-xl border border-slate-200/80 bg-ink p-4 sm:p-7 text-slate-300 shadow-lg">
               <div className="flex items-center justify-between gap-3">
                 <p className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-500">
                   <Ruler className="h-3.5 w-3.5" />
@@ -201,7 +201,7 @@ export function StiltParking(): JSX.Element {
         </div>
 
         {/* Why it is worth doing — three points, no animation of their own. */}
-        <dl className="mt-16 grid gap-10 sm:grid-cols-3 sm:gap-8">
+        <dl className="mt-10 sm:mt-16 grid gap-6 sm:grid-cols-3 sm:gap-8">
           {BENEFITS.map((benefit, index) => {
             const Icon = benefit.icon;
             return (

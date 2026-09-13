@@ -28,11 +28,11 @@ export function Testimonials(): JSX.Element {
   }, []);
 
   return (
-    <section id="testimonials" className="border-b border-slate-200 bg-white py-20 lg:py-28">
+    <section id="testimonials" className="border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
 
-        <div className="mt-16 grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+        <div className="mt-8 sm:mt-16 grid items-start gap-8 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
           {/* Carousel */}
           <Reveal>
             <div
@@ -49,7 +49,7 @@ export function Testimonials(): JSX.Element {
                   page(1);
                 }
               }}
-              className="rounded-xl border border-slate-200/80 bg-canvas p-6 shadow-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 sm:p-8"
+              className="rounded-xl border border-slate-200/80 bg-canvas p-4 sm:p-8 shadow-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2"
             >
               {/* The track is a flex row, so its height settles on the longest
                   quote once and never changes as slides page. */}
@@ -190,7 +190,7 @@ export function Testimonials(): JSX.Element {
               </div>
 
               <dl className="mt-5 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-slate-200/80 bg-slate-200">
-                <div className="bg-white px-4 py-4">
+                <div className="bg-white p-3 xs:px-4 xs:py-4">
                   <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">
                     Cities
                   </dt>
@@ -198,7 +198,7 @@ export function Testimonials(): JSX.Element {
                     {PRESENCE_CITIES.length}
                   </dd>
                 </div>
-                <div className="bg-white px-4 py-4">
+                <div className="bg-white p-3 xs:px-4 xs:py-4">
                   <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">
                     Projects
                   </dt>
@@ -206,7 +206,7 @@ export function Testimonials(): JSX.Element {
                     {TOTAL_PROJECTS}
                   </dd>
                 </div>
-                <div className="bg-white px-4 py-4">
+                <div className="bg-white p-3 xs:px-4 xs:py-4">
                   <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500">
                     Response
                   </dt>

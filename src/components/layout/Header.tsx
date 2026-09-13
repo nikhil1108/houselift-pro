@@ -55,12 +55,13 @@ export function Header(): JSX.Element {
           )}
         >
           <div className="mx-auto flex h-10 w-full max-w-7xl items-center justify-between gap-x-4 px-4 text-xs text-slate-300 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-2 font-medium text-white whitespace-nowrap">
+            <div className="flex items-center gap-1.5 sm:gap-2 font-medium text-white whitespace-nowrap text-[11px] min-[380px]:text-xs">
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:hidden" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-slate-400">24/7 Helpline:</span>
+              <span className="text-slate-400 hidden min-[380px]:inline">24/7 Helpline:</span>
+              <span className="text-slate-400 min-[380px]:hidden">24/7:</span>
               <a
                 href={telHref(CONTACT_INFO.phonePrimary)}
                 className="text-white transition-colors hover:text-amber-400"
@@ -226,7 +227,7 @@ export function Header(): JSX.Element {
                 aria-expanded={menuOpen}
                 aria-controls="mobile-nav"
                 onClick={() => setMenuOpen((open) => !open)}
-                className="flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-ink transition-colors hover:bg-slate-100 lg:hidden"
+                className="flex h-11 w-11 items-center justify-center rounded-md border border-slate-300 text-ink transition-colors hover:bg-slate-100 touch-manipulation lg:hidden"
               >
                 {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>

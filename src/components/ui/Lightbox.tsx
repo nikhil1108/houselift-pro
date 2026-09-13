@@ -106,7 +106,7 @@ export function Lightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-2.5 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={`Project ${project.index}: ${project.title}`}
@@ -121,7 +121,7 @@ export function Lightbox({
 
       <div
         ref={panelRef}
-        className="relative z-10 flex max-h-[90vh] w-full max-w-6xl animate-lightbox-in flex-col overflow-hidden rounded-xl bg-white shadow-2xl lg:flex-row"
+        className="relative z-10 flex max-h-[92dvh] sm:max-h-[90vh] w-full max-w-6xl animate-lightbox-in flex-col overflow-hidden rounded-xl bg-white shadow-2xl lg:flex-row"
       >
         {/* Plate. The aspect lives on the wrapper, not the plate — a photo
             renders with `fill` and so contributes no intrinsic height. */}
@@ -159,7 +159,7 @@ export function Lightbox({
         </div>
 
         {/* Detail panel */}
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-6 sm:p-8">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4 sm:p-8">
           <div className="flex items-start justify-between gap-4">
             <span className="inline-flex items-center gap-1.5 rounded-sm bg-hydraulic-50 px-2.5 py-1 font-mono text-xs font-medium uppercase tracking-wider text-hydraulic-700">
               <MapPin className="h-3.5 w-3.5" />
@@ -171,27 +171,27 @@ export function Lightbox({
               type="button"
               onClick={onClose}
               aria-label="Close project viewer"
-              className="-mr-1 -mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-ink"
+              className="-mr-1 -mt-1 flex h-11 w-11 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-ink"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
-          <h3 className="mt-4 text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
+          <h3 className="mt-3 sm:mt-4 text-lg sm:text-2xl font-bold leading-snug tracking-tight text-ink">
             {project.title}
           </h3>
 
-          <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-relaxed text-ink-muted">
             {project.caption}
           </p>
 
-          <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-slate-200 bg-slate-200">
+          <dl className="mt-4 sm:mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-slate-200 bg-slate-200">
             {project.specs.map((spec) => (
-              <div key={spec.label} className="bg-white px-4 py-3">
-                <dt className="text-xs uppercase tracking-wider text-slate-500">
+              <div key={spec.label} className="bg-white px-3 py-2 sm:px-4 sm:py-3">
+                <dt className="text-[10px] sm:text-xs uppercase tracking-wider text-slate-500">
                   {spec.label}
                 </dt>
-                <dd className="mt-1 font-mono text-sm font-semibold text-ink">
+                <dd className="mt-1 font-mono text-xs sm:text-sm font-semibold text-ink">
                   {spec.value}
                 </dd>
               </div>

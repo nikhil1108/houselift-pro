@@ -64,7 +64,7 @@ export function Gallery(): JSX.Element {
   };
 
   return (
-    <section id="gallery" className="border-b border-slate-200 bg-white py-20 lg:py-28">
+    <section id="gallery" className="border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
@@ -81,7 +81,7 @@ export function Gallery(): JSX.Element {
           <div
             role="tablist"
             aria-label="Filter field projects by category"
-            className="no-scrollbar mt-10 flex gap-2 overflow-x-auto pb-1"
+            className="no-scrollbar mt-10 -mx-4 px-4 sm:mx-0 sm:px-0 flex gap-2 overflow-x-auto pb-1"
           >
             {GALLERY_FILTERS.map((option) => {
               const active = filter === option.value;
@@ -115,7 +115,7 @@ export function Gallery(): JSX.Element {
         {/* Re-keyed on the filter so the surviving cards replay their reveal. */}
         <div
           key={filter}
-          className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+          className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
         >
           {visible.map((project, index) => (
             <Reveal key={project.id} delayMs={Math.min(index, 5) * 60} className="h-full">
@@ -162,12 +162,12 @@ export function Gallery(): JSX.Element {
                   </span>
                 </div>
 
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-sm font-semibold leading-snug tracking-tight text-ink group-hover:text-amber-800">
+                <div className="flex flex-1 flex-col p-4 sm:p-5">
+                  <h3 className="text-sm sm:text-base font-semibold leading-snug tracking-tight text-ink group-hover:text-amber-800">
                     {project.title}
                   </h3>
 
-                  <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-500">
+                  <p className="mt-2 line-clamp-2 text-xs sm:text-sm leading-relaxed text-slate-500">
                     {project.caption}
                   </p>
 
@@ -192,8 +192,8 @@ export function Gallery(): JSX.Element {
         </p>
 
         {/* Live Video & Social Channels Banner */}
-        <Reveal delayMs={150} className="mt-12">
-          <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-ink via-slate-900 to-ink p-6 text-white shadow-xl sm:p-8 lg:p-10">
+        <Reveal delayMs={150} className="mt-8 sm:mt-12">
+          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-slate-200/80 bg-gradient-to-br from-ink via-slate-900 to-ink p-4 text-white shadow-xl sm:p-8 lg:p-10">
             {/* Engineering grid accent */}
             <div
               aria-hidden
@@ -205,55 +205,55 @@ export function Gallery(): JSX.Element {
               }}
             />
 
-            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-red-400">
-                  <span className="relative flex h-2 w-2">
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-2.5 py-0.5 sm:px-3 sm:py-1 font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-red-400">
+                  <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75 motion-reduce:hidden" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                    <span className="relative inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-red-500" />
                   </span>
                   Live Field Recordings &amp; Reels
                 </div>
-                <h3 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                <h3 className="mt-2 sm:mt-3 text-lg sm:text-2xl lg:text-3xl font-bold tracking-tight text-white">
                   Watch Our Mechanical Lifting Operations Live
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">
+                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm leading-relaxed text-slate-300 sm:text-base">
                   See full continuous videos of houses being lifted, rotated, and shifted on mechanical jacks. Follow our daily site updates and technical walk-throughs across India.
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <a
                   href={CONTACT_INFO.socials.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-white/20 hover:scale-105"
+                  className="group flex items-center gap-2 sm:gap-2.5 rounded-lg sm:rounded-xl border border-white/20 bg-white/10 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-semibold text-white shadow-lg transition-all hover:bg-white/20 hover:scale-105"
                 >
-                  <YoutubeOriginalIcon className="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" />
+                  <YoutubeOriginalIcon className="h-4 w-4 sm:h-5 sm:w-5 shrink-0 transition-transform group-hover:scale-110" />
                   <span>YouTube Channel</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
 
                 <a
                   href={CONTACT_INFO.socials.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105"
+                  className="group flex items-center gap-2 sm:gap-2.5 rounded-lg sm:rounded-xl border border-white/20 bg-white/10 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105"
                 >
-                  <InstagramOriginalIcon className="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" />
+                  <InstagramOriginalIcon className="h-4 w-4 sm:h-5 sm:w-5 shrink-0 transition-transform group-hover:scale-110" />
                   <span>Instagram Reels</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
 
                 <a
                   href={CONTACT_INFO.socials.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2.5 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105"
+                  className="group flex items-center gap-2 sm:gap-2.5 rounded-lg sm:rounded-xl border border-white/20 bg-white/10 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105"
                 >
-                  <FacebookOriginalIcon className="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" />
+                  <FacebookOriginalIcon className="h-4 w-4 sm:h-5 sm:w-5 shrink-0 transition-transform group-hover:scale-110" />
                   <span>Facebook</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               </div>
             </div>

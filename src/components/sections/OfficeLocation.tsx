@@ -63,7 +63,7 @@ export function OfficeLocation(): JSX.Element {
   return (
     <section
       id="office"
-      className="border-b border-slate-200 bg-white py-20 lg:py-28"
+      className="border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -114,7 +114,7 @@ export function OfficeLocation(): JSX.Element {
 
           {/* Details */}
           <Reveal delayMs={100} className="lg:col-span-2">
-            <div className="flex h-full flex-col rounded-xl border border-slate-200/80 bg-canvas p-6 shadow-panel sm:p-8">
+            <div className="flex h-full flex-col rounded-xl border border-slate-200/80 bg-canvas p-4 sm:p-8 shadow-panel">
               <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-600">
                 {HEAD_OFFICE.label}
               </p>

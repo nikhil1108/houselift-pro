@@ -24,7 +24,7 @@ const INCLUSIONS: readonly string[] = [
 ];
 
 const FIELD_CLASS =
-  "h-11 w-full rounded border bg-white px-3.5 text-sm text-ink placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-1 disabled:bg-slate-50 disabled:text-slate-500";
+  "h-11 w-full rounded border bg-white px-3.5 text-base sm:text-sm text-ink placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-1 disabled:bg-slate-50 disabled:text-slate-500";
 
 export function QuoteSection(): JSX.Element {
   const [form, setForm] = useState<LeadFormState>(EMPTY_FORM);
@@ -87,41 +87,41 @@ export function QuoteSection(): JSX.Element {
   };
 
   return (
-    <section id="quote" className="border-t border-slate-200 bg-canvas py-20 lg:py-28">
+    <section id="quote" className="border-t border-slate-200 bg-canvas py-12 sm:py-16 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal>
             <div>
               <p className="mb-3 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">
                 <span aria-hidden className="h-px w-6 bg-amber-600/50" />
                 Free site survey
               </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink lg:text-4xl">
+              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-ink lg:text-4xl">
                 Book a structural assessment
               </h2>
-              <p className="mt-4 text-lg leading-relaxed text-slate-600">
+              <p className="mt-3 sm:mt-4 text-sm sm:text-lg leading-relaxed text-slate-600">
                 A licensed engineer visits your site, scans the structure, and
                 returns a costed proposal within 48 hours. There is no charge and
                 no obligation to proceed.
               </p>
 
-              <ul className="mt-8 space-y-3">
+              <ul className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-3">
                 {INCLUSIONS.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
+                  <li key={item} className="flex items-start gap-2.5">
                     <Check
                       className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
                       aria-hidden
                     />
-                    <span className="text-sm text-slate-700">{item}</span>
+                    <span className="text-xs sm:text-sm text-slate-700">{item}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-10 rounded-lg border border-slate-200 bg-white p-5">
-                <p className="text-sm text-slate-600">
+              <div className="mt-6 sm:mt-10 rounded-lg border border-slate-200 bg-white p-4 sm:p-5">
+                <p className="text-xs sm:text-sm text-slate-600">
                   Prefer to talk it through first?
                 </p>
-                <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                <div className="mt-2 flex flex-col xs:flex-row xs:items-center gap-2 sm:gap-4">
                   <a
                     href={telHref(CONTACT_INFO.phonePrimary)}
                     className="flex items-center gap-2 text-base font-semibold text-amber-700 hover:underline sm:text-lg"
@@ -168,7 +168,7 @@ export function QuoteSection(): JSX.Element {
                       <p className="mb-2 font-mono font-semibold uppercase tracking-wider text-slate-500">
                         Submitted Details:
                       </p>
-                      <div className="grid grid-cols-2 gap-2 text-slate-700">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-700">
                         <div>
                           <span className="font-medium text-slate-500">Name:</span> {submittedLead.name}
                         </div>
@@ -191,7 +191,7 @@ export function QuoteSection(): JSX.Element {
                     WhatsApp was also opened with your details so you can message our lead engineer directly.
                   </p>
 
-                  <div className="mt-6 flex flex-wrap gap-3">
+                  <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
                     {submittedLead && (
                       <a
                         href={buildWhatsAppLink(
@@ -206,7 +206,7 @@ export function QuoteSection(): JSX.Element {
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 sm:py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700"
                       >
                         <MessageSquare className="h-4 w-4" />
                         Send query to WhatsApp
@@ -215,12 +215,13 @@ export function QuoteSection(): JSX.Element {
                     <Button
                       variant="outline"
                       onClick={() => setStatus("idle")}
+                      className="w-full sm:w-auto"
                     >
                       Submit another enquiry
                     </Button>
                     <a
                       href={`mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(`House lifting survey enquiry - ${submittedLead?.name || ""}`)}&body=${encodeURIComponent(`Name: ${submittedLead?.name || ""}\nPhone: ${submittedLead?.phone || ""}\nCity: ${submittedLead?.city || ""}\nBuilt-up area: ${submittedLead?.areaSqFt || ""} sq ft`)}`}
-                      className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 hover:text-ink"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 sm:py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 hover:text-ink w-full sm:w-auto"
                     >
                       <Mail className="h-4 w-4 text-amber-600" />
                       Email us directly
@@ -293,7 +294,7 @@ export function QuoteSection(): JSX.Element {
                       )}
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                       <div>
                         <label
                           htmlFor="lead-city"

@@ -17,7 +17,7 @@ export function Comparison(): JSX.Element {
   return (
     <section
       id="comparison"
-      className="border-b border-slate-200 bg-white py-20 lg:py-28"
+      className="border-b border-slate-200 bg-white py-12 sm:py-16 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -29,7 +29,7 @@ export function Comparison(): JSX.Element {
           />
         </Reveal>
 
-        <div className="mt-14 grid items-start gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-14">
+        <div className="mt-8 sm:mt-14 grid items-start gap-8 sm:gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-14">
           <Reveal>
             <ElevationClip />
             <p className="mt-4 flex items-center gap-2 font-mono text-xs text-slate-500">
