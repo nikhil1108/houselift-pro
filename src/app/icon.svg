@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="RR AND SONS">
+  <!--
+    Favicon, distilled from public/RRandSonsLogo.png.
+
+    The full wordmark is unreadable at 16px, and so are the two R's, so this
+    keeps the one element of the logo that survives at tab size: the gable with
+    the four-pane window and its single accent square. Drawn on a dark tile so
+    the mark holds its shape against both light and dark browser chrome —
+    a knocked-out white version would disappear on a light tab strip.
+
+    Orange is the logo's own, not the site's amber-600, because this sits
+    beside the logo rather than inside the page palette.
+  -->
+  <rect width="64" height="64" rx="14" fill="#17181A" />
+
+  <!-- Gable -->
+  <path d="M4 37 L32 10 L60 37 L48.5 37 L32 21 L15.5 37 Z" fill="#FFFFFF" />
+
+  <!-- Four-pane window; top-right carries the accent, as in the logo -->
+  <rect x="22.5" y="41" width="8" height="8" fill="#FFFFFF" />
+  <rect x="33.5" y="41" width="8" height="8" fill="#F97316" />
+  <rect x="22.5" y="52" width="8" height="8" fill="#FFFFFF" />
+  <rect x="33.5" y="52" width="8" height="8" fill="#FFFFFF" />
+</svg>

@@ -1,34 +1,54 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2020",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": [
+    "node_modules",
+
+    // Superseded Phase-1 files. Nothing imports them; they still reference
+    // framer-motion / lenis, which are no longer dependencies. Excluded so they
+    // cannot fail the build. Safe to delete, at which point this list goes too.
+    "src/components/animations/ElevationSimulator.tsx",
+    "src/components/animations/HeroParallax.tsx",
+    "src/components/animations/ProcessTimeline.tsx",
+    "src/components/providers",
+    "src/components/ui/AnimatedNumber.tsx",
+    "src/components/ui/CostCalculator.tsx",
+    "src/components/ui/JackEmblem.tsx",
+    "src/components/sections/CtaBand.tsx",
+    "src/components/sections/FaqSection.tsx",
+    "src/components/sections/Projects.tsx",
+    "src/components/sections/ProjectsSection.tsx",
+    "src/components/sections/ServicesSection.tsx",
+    "src/components/sections/TestimonialsSection.tsx",
+    "src/components/sections/TrustSection.tsx",
+    "src/hooks/useScrollProgress.ts",
+
+    // Superseded copies of the storyboard. The live one is
+    // src/components/animations/ScrolableAnimation.tsx, mounted in page.tsx.
+    // Nothing imports these two; safe to delete.
+    "src/components/ui/ScrollBuildingStory.tsx",
+    "src/components/sections/ScrollBuildingStory.tsx"
+  ]
 }

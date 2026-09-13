@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Technical elevation drawing of a residential structure raised on mechanical jacks">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="55%" stop-color="#eef2f7"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#cbd5e1" stroke-width="1" opacity="0.55"/>
+    </pattern>
+    <pattern id="gridFine" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M8 0H0V8" fill="none" stroke="#cbd5e1" stroke-width="0.5" opacity="0.35"/>
+    </pattern>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#94a3b8" stroke-width="1"/>
+    </pattern>
+    <pattern id="soil" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect width="1600" height="900" fill="url(#gridFine)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <!-- ground / excavation datum -->
+  <g stroke="#64748b" fill="none">
+    <line x1="0" y1="712" x2="1600" y2="712" stroke-width="2"/>
+    <rect x="0" y="712" width="1600" height="188" fill="url(#soil)" stroke="none" opacity="0.5"/>
+    <line x1="0" y1="760" x2="1600" y2="760" stroke-width="1" stroke-dasharray="10 8" opacity="0.5"/>
+  </g>
+
+  <!-- ================= PRIMARY STRUCTURE (raised) ================= -->
+  <g transform="translate(430 0)">
+    <!-- new plinth / infill masonry built beneath the lifted slab -->
+    <rect x="60" y="600" width="620" height="112" fill="url(#hatch)" opacity="0.35"/>
+    <rect x="60" y="600" width="620" height="112" fill="none" stroke="#475569" stroke-width="2"/>
+    <g stroke="#64748b" stroke-width="1" opacity="0.8">
+      <line x1="60" y1="628" x2="680" y2="628"/>
+      <line x1="60" y1="656" x2="680" y2="656"/>
+      <line x1="60" y1="684" x2="680" y2="684"/>
+      <line x1="200" y1="600" x2="200" y2="712"/>
+      <line x1="370" y1="600" x2="370" y2="712"/>
+      <line x1="540" y1="600" x2="540" y2="712"/>
+    </g>
+
+    <!-- lifted RCC slab -->
+    <rect x="40" y="574" width="660" height="26" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+    <line x1="40" y1="587" x2="700" y2="587" stroke="#94a3b8" stroke-width="1"/>
+
+    <!-- ground floor walls -->
+    <rect x="72" y="410" width="596" height="164" fill="#ffffff" stroke="#334155" stroke-width="2.5"/>
+    <!-- openings -->
+    <g fill="#eef2f7" stroke="#475569" stroke-width="1.75">
+      <rect x="118" y="452" width="88" height="82"/>
+      <rect x="246" y="452" width="88" height="82"/>
+      <rect x="406" y="452" width="88" height="82"/>
+      <rect x="556" y="440" width="74" height="134"/>
+    </g>
+    <g stroke="#94a3b8" stroke-width="1">
+      <line x1="162" y1="452" x2="162" y2="534"/><line x1="118" y1="493" x2="206" y2="493"/>
+      <line x1="290" y1="452" x2="290" y2="534"/><line x1="246" y1="493" x2="334" y2="493"/>
+      <line x1="450" y1="452" x2="450" y2="534"/><line x1="406" y1="493" x2="494" y2="493"/>
+      <line x1="593" y1="440" x2="593" y2="574"/>
+    </g>
+
+    <!-- first floor slab -->
+    <rect x="56" y="388" width="628" height="22" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+
+    <!-- first floor walls -->
+    <rect x="88" y="238" width="564" height="150" fill="#ffffff" stroke="#334155" stroke-width="2.5"/>
+    <g fill="#eef2f7" stroke="#475569" stroke-width="1.75">
+      <rect x="132" y="278" width="84" height="74"/>
+      <rect x="262" y="278" width="84" height="74"/>
+      <rect x="418" y="278" width="84" height="74"/>
+      <rect x="536" y="278" width="72" height="74"/>
+    </g>
+    <g stroke="#94a3b8" stroke-width="1">
+      <line x1="174" y1="278" x2="174" y2="352"/><line x1="132" y1="315" x2="216" y2="315"/>
+      <line x1="304" y1="278" x2="304" y2="352"/><line x1="262" y1="315" x2="346" y2="315"/>
+      <line x1="460" y1="278" x2="460" y2="352"/><line x1="418" y1="315" x2="502" y2="315"/>
+      <line x1="572" y1="278" x2="572" y2="352"/><line x1="536" y1="315" x2="608" y2="315"/>
+    </g>
+
+    <!-- parapet + roof -->
+    <rect x="72" y="216" width="596" height="22" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+    <path d="M56 216 L370 132 L684 216 Z" fill="#ffffff" stroke="#334155" stroke-width="2.5" stroke-linejoin="round"/>
+    <line x1="370" y1="132" x2="370" y2="216" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="470" y="150" width="34" height="66" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+    <rect x="464" y="142" width="46" height="10" fill="#cbd5e1" stroke="#475569" stroke-width="1.75"/>
+  </g>
+
+  <!-- ================= MECHANICAL JACKS ================= -->
+  <g id="jacks">
+    <!-- jack template repeated at four bay positions -->
+    <g transform="translate(520 0)">
+      <rect x="-26" y="676" width="52" height="36" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+      <rect x="-16" y="612" width="32" height="64" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+      <rect x="-7" y="574" width="14" height="42" fill="#94a3b8" stroke="#334155" stroke-width="1.75"/>
+      <circle cx="0" cy="644" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(700 0)">
+      <rect x="-26" y="676" width="52" height="36" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+      <rect x="-16" y="612" width="32" height="64" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+      <rect x="-7" y="574" width="14" height="42" fill="#94a3b8" stroke="#334155" stroke-width="1.75"/>
+      <circle cx="0" cy="644" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(880 0)">
+      <rect x="-26" y="676" width="52" height="36" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+      <rect x="-16" y="612" width="32" height="64" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+      <rect x="-7" y="574" width="14" height="42" fill="#94a3b8" stroke="#334155" stroke-width="1.75"/>
+      <circle cx="0" cy="644" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(1060 0)">
+      <rect x="-26" y="676" width="52" height="36" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+      <rect x="-16" y="612" width="32" height="64" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+      <rect x="-7" y="574" width="14" height="42" fill="#94a3b8" stroke="#334155" stroke-width="1.75"/>
+      <circle cx="0" cy="644" r="7" fill="none" stroke="#475569" stroke-width="1.5"/>
+    </g>
+    <!-- manifold line linking the jacks -->
+    <path d="M520 694 H1060" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="6 5" opacity="0.7"/>
+  </g>
+
+  <!-- ================= DIMENSION LINES ================= -->
+  <g stroke="#2563eb" fill="none" stroke-width="1.75" opacity="0.9">
+    <!-- lift height -->
+    <line x1="352" y1="600" x2="352" y2="712"/>
+    <path d="M346 606 L352 598 L358 606"/>
+    <path d="M346 706 L352 714 L358 706"/>
+    <line x1="330" y1="712" x2="470" y2="712" stroke-width="1" stroke-dasharray="6 5"/>
+    <line x1="330" y1="600" x2="470" y2="600" stroke-width="1" stroke-dasharray="6 5"/>
+    <!-- overall width -->
+    <line x1="470" y1="800" x2="1130" y2="800"/>
+    <path d="M476 794 L468 800 L476 806"/>
+    <path d="M1124 794 L1132 800 L1124 806"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#2563eb" font-size="19">
+    <text x="252" y="662">LIFT</text>
+    <text x="252" y="684">+6′-0″</text>
+    <text x="762" y="828">SPAN 44′-0″</text>
+  </g>
+
+  <!-- centre + level reference marks -->
+  <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="14 6 3 6" opacity="0.75">
+    <line x1="800" y1="80" x2="800" y2="860"/>
+    <line x1="120" y1="574" x2="1480" y2="574"/>
+  </g>
+  <g fill="none" stroke="#475569" stroke-width="1.5">
+    <path d="M148 566 L160 574 L148 582 Z" fill="#475569"/>
+    <path d="M1452 566 L1440 574 L1452 582 Z" fill="#475569"/>
+  </g>
+
+  <!-- corner title block -->
+  <g transform="translate(48 748)">
+    <rect x="0" y="0" width="300" height="104" fill="#ffffff" fill-opacity="0.72" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="0" y1="34" x2="300" y2="34" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="0" y1="69" x2="300" y2="69" stroke="#cbd5e1" stroke-width="1"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#64748b" font-size="14">
+      <text x="14" y="23">SECTION A-A · FRONT ELEVATION</text>
+      <text x="14" y="58">SCALE 1:50 · SHEET S-04</text>
+      <text x="14" y="92">MECHANICAL LIFT SEQUENCE · REV C</text>
+    </g>
+  </g>
+</svg>

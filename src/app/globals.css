@@ -1,0 +1,951 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Surfaces */
+    --canvas: #f8fafc;
+    --surface: #ffffff;
+    --surface-sunken: #f1f5f9;
+
+    /* Ink — Deep Steel Charcoal */
+    --ink: #0f172a;
+    --ink-muted: #475569;
+    --ink-subtle: #94a3b8;
+
+    /* Hairlines */
+    --line: #e2e8f0;
+    --line-strong: #cbd5e1;
+
+    /* Accents */
+    --amber: #d97706;
+    --amber-bright: #f59e0b;
+    --hydraulic: #0284c7;
+
+    /*
+     * RGB triplets (not hex) — BuildingScene paints its inspection overlay
+     * with rgb(var(--color-accent)), which needs the channels unwrapped.
+     */
+    --color-accent: 217 119 6;
+    --color-success: 5 150 105;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Anchor targets clear the sticky header instead of hiding behind it. */
+    scroll-padding-top: 6rem;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Belt-and-braces against horizontal overflow from any decorative layer. */
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  /* GSAP ScrollTrigger pin spacer must never blow out viewport width on mobile */
+  .pin-spacer {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: #fde68a;
+    color: #78350f;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * ------------------------------------------------------------------
+   * Staggered reveal deck
+   * ------------------------------------------------------------------
+   * JS flips [data-reveal] to [data-reveal="in"] via IntersectionObserver.
+   * The transition itself is pure CSS, so it runs on the compositor and
+   * never triggers layout while scrolling.
+   */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Once settled, drop the compositor hint so layers aren't held open. */
+  [data-reveal="in"][data-reveal-settled="true"] {
+    will-change: auto;
+  }
+
+  /*
+   * ------------------------------------------------------------------
+   * Container-bounded scroll animation
+   * ------------------------------------------------------------------
+   * `useScrollScene` writes a 0–1 number into --scroll-progress on the
+   * section element. Everything below derives a transform from it. Because
+   * the property lives on the section, every consumer is a descendant and
+   * the motion is structurally incapable of escaping its container.
+   */
+  .scroll-lift {
+    transform: translate3d(0, calc(var(--scroll-progress, 0) * -120px), 0);
+    will-change: transform;
+  }
+
+  .scroll-rail-fill {
+    transform-origin: top center;
+    transform: scaleY(var(--scroll-progress, 0));
+    will-change: transform;
+  }
+
+  .parallax-bg {
+    transform: translate3d(0, calc(var(--scroll-progress, 0) * 64px), 0);
+    will-change: transform;
+  }
+
+  .parallax-fg {
+    transform: translate3d(0, calc(var(--scroll-progress, 0) * -24px), 0);
+    will-change: transform;
+  }
+
+  /*
+   * ------------------------------------------------------------------
+   * Elevation simulator (scroll animation 1)
+   * ------------------------------------------------------------------
+   * Every part of the lift is a transform driven off the same
+   * --scroll-progress the section publishes. `transform-box: fill-box`
+   * lets the SVG parts use their own bounding box as the origin, so a
+   * jack rod or a pillar grows from its foot rather than from the
+   * viewBox origin.
+   */
+  .sim-lift {
+    transform: translate3d(0, calc(var(--scroll-progress, 0) * -120px), 0);
+    will-change: transform;
+  }
+
+  .sim-rod {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    /* Never fully collapsed — a real cylinder always shows some rod. */
+    transform: scaleY(calc(0.06 + var(--scroll-progress, 0) * 0.94));
+    will-change: transform;
+  }
+
+  .sim-grow {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    transform: scaleY(var(--scroll-progress, 0));
+    will-change: transform;
+  }
+
+  .sim-in {
+    opacity: var(--scroll-progress, 0);
+  }
+
+  .sim-out {
+    opacity: calc(1 - var(--scroll-progress, 0));
+  }
+
+  .sim-gauge {
+    transform-origin: left center;
+    transform: scaleX(var(--scroll-progress, 0));
+    will-change: transform;
+  }
+
+  /*
+   * ------------------------------------------------------------------
+   * Stilt parking (scroll animation 2)
+   * ------------------------------------------------------------------
+   * Same --scroll-progress contract as the simulator above, but the story
+   * is different: the house rises, columns grow into the gap it leaves,
+   * and a car drives in underneath. The three are deliberately staggered
+   * inside the single 0–1 progress value rather than run off separate
+   * timelines — one scroll position always describes one unambiguous
+   * state of the build, which is what makes it read as a sequence.
+   */
+
+  /* House travels the full 132px of clearance across the first 62%. */
+  .stilt-house {
+    transform: translate3d(
+      0,
+      calc(min(var(--scroll-progress, 0) / 0.62, 1) * -132px),
+      0
+    );
+    will-change: transform;
+  }
+
+  /*
+   * Columns start at 30% — by then the house has opened enough of a gap
+   * that a growing column reads as filling a void rather than pushing.
+   */
+  .stilt-column {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    transform: scaleY(clamp(0, (var(--scroll-progress, 0) - 0.3) / 0.42, 1));
+    will-change: transform;
+  }
+
+  /* Ground shadow widens as the bay opens up. */
+  .stilt-shadow {
+    transform-box: fill-box;
+    transform-origin: center center;
+    transform: scaleX(calc(0.4 + min(var(--scroll-progress, 0) / 0.62, 1) * 0.6));
+    opacity: calc(0.15 + min(var(--scroll-progress, 0) / 0.62, 1) * 0.25);
+  }
+
+  /*
+   * Car drives in last (72%+), once the columns are structurally there.
+   * Parked at -170px so it enters from off-plate on the left.
+   */
+  .stilt-car {
+    transform: translate3d(
+      calc(-170px + clamp(0, (var(--scroll-progress, 0) - 0.72) / 0.24, 1) * 170px),
+      0,
+      0
+    );
+    opacity: clamp(0, (var(--scroll-progress, 0) - 0.72) / 0.12, 1);
+    will-change: transform;
+  }
+
+  /* Dimension arrow + label for the clearance, fading in with the columns. */
+  .stilt-dim {
+    opacity: clamp(0, (var(--scroll-progress, 0) - 0.44) / 0.2, 1);
+  }
+
+  /* Jacks are temporary — they retire once the columns take the load. */
+  .stilt-jack {
+    opacity: calc(1 - clamp(0, (var(--scroll-progress, 0) - 0.62) / 0.16, 1));
+  }
+
+  /*
+   * ------------------------------------------------------------------
+   * 3D elevation card
+   * ------------------------------------------------------------------
+   * The card lifts toward the reader on hover. The rotation is tiny on
+   * purpose — enough to read as a physical plate being raised off the
+   * canvas, not enough to distort the type. Requires `perspective` on the
+   * grid wrapper; transform + box-shadow only, so nothing reflows.
+   */
+  .card-3d {
+    transform-style: preserve-3d;
+    transition:
+      transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 350ms ease;
+    will-change: transform;
+  }
+
+  @media (hover: hover) {
+    .card-3d:hover {
+      transform: translate3d(0, -6px, 24px) rotateX(2.5deg);
+      border-color: rgb(226 232 240);
+      box-shadow:
+        0 20px 25px -5px rgba(15, 23, 42, 0.1),
+        0 8px 10px -6px rgba(15, 23, 42, 0.06);
+    }
+  }
+
+  .card-3d:focus-within {
+    transform: translate3d(0, -6px, 24px);
+    box-shadow:
+      0 20px 25px -5px rgba(15, 23, 42, 0.1),
+      0 8px 10px -6px rgba(15, 23, 42, 0.06);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .card-3d,
+    .card-3d:hover,
+    .card-3d:focus-within {
+      transform: none;
+    }
+
+    .scroll-lift,
+    .parallax-bg,
+    .parallax-fg {
+      transform: none;
+    }
+
+    /* The simulator's *point* is the lifted state, so reduced motion parks it
+       at the end pose rather than at zero — static, but still informative. */
+    .sim-lift {
+      transform: translate3d(0, -120px, 0);
+    }
+
+    .sim-rod,
+    .sim-grow,
+    .sim-gauge {
+      transform: none;
+    }
+
+    .sim-in {
+      opacity: 1;
+    }
+
+    .sim-out {
+      opacity: 0;
+    }
+
+    /* Same reasoning as the simulator: the finished stilt bay is the whole
+       point of the section, so park at the completed build rather than at
+       an un-lifted house with no columns and no car. */
+    .stilt-house {
+      transform: translate3d(0, -132px, 0);
+    }
+
+    .stilt-column {
+      transform: none;
+    }
+
+    .stilt-shadow {
+      transform: none;
+      opacity: 0.4;
+    }
+
+    .stilt-car {
+      transform: none;
+      opacity: 1;
+    }
+
+    .stilt-dim {
+      opacity: 1;
+    }
+
+    .stilt-jack {
+      opacity: 0;
+    }
+
+    .scroll-rail-fill {
+      transform: scaleY(1);
+    }
+  }
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Hero photographic backdrop
+ * ---------------------------------------------------------------------------
+ * Registered custom property. Unlike a plain `--var`, a typed one interpolates,
+ * so the veil can be *animated* through `color-mix()` below — the scrim settles
+ * from near-opaque to its resting weight on load, which reads as the photograph
+ * being revealed rather than simply appearing.
+ */
+@property --hero-veil {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 88%;
+}
+
+@keyframes hero-veil-settle {
+  from {
+    --hero-veil: 92%;
+  }
+  to {
+    --hero-veil: 72%;
+  }
+}
+
+/* Ken Burns. Transform + transform-origin only, so it runs on the compositor
+   and never triggers layout against the copy sitting on top of it. */
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(-1.2%, -1.6%, 0);
+  }
+}
+
+@layer utilities {
+  .hero-kenburns {
+    transform-origin: 62% 72%;
+    animation: hero-kenburns 28s cubic-bezier(0.33, 0, 0.35, 1) infinite alternate;
+    will-change: transform;
+  }
+
+  /*
+   * Contrast scrim. Two stacked gradients: an angled wash that is heaviest
+   * behind the copy column and thins toward the photograph's subject, plus a
+   * vertical seat so the section reads as grounded rather than cropped.
+   *
+   * Mixed in oklab rather than sRGB — a charcoal-to-transparent ramp in sRGB
+   * dips muddy through the midpoint, which is exactly where the body copy sits.
+   */
+  .hero-scrim {
+    animation: hero-veil-settle 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    background-image:
+      linear-gradient(
+        100deg,
+        color-mix(in oklab, var(--ink) var(--hero-veil), transparent) 0%,
+        color-mix(in oklab, var(--ink) calc(var(--hero-veil) - 12%), transparent) 44%,
+        color-mix(in oklab, var(--ink) calc(var(--hero-veil) - 40%), transparent) 74%,
+        color-mix(in oklab, var(--ink) calc(var(--hero-veil) - 26%), transparent) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--ink) 42%, transparent) 0%,
+        transparent 34%,
+        color-mix(in oklab, var(--ink) 58%, transparent) 100%
+      );
+  }
+
+  /*
+   * Fallback for engines without color-mix(). Same intent, flat sRGB stops and
+   * no animated veil — the copy stays legible, it just loses the settle.
+   */
+  @supports not (color: color-mix(in oklab, red, blue)) {
+    .hero-scrim {
+      animation: none;
+      background-image:
+        linear-gradient(
+          100deg,
+          rgba(15, 23, 42, 0.9) 0%,
+          rgba(15, 23, 42, 0.78) 44%,
+          rgba(15, 23, 42, 0.42) 74%,
+          rgba(15, 23, 42, 0.58) 100%
+        ),
+        linear-gradient(
+          to bottom,
+          rgba(15, 23, 42, 0.42) 0%,
+          transparent 34%,
+          rgba(15, 23, 42, 0.58) 100%
+        );
+    }
+  }
+
+  /* Feathers the photograph into the section edge instead of ending on a
+     hard crop line. */
+  .hero-photo-mask {
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  }
+
+  /* Drafting grid in white, for the dark hero. The slate version above is
+     invisible against a photograph. */
+  .bg-engineering-grid-inverse {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /*
+   * Frosted panel for content sitting on the photograph. `saturate` alongside
+   * the blur keeps the photo's colour from going grey behind the glass.
+   */
+  .glass-panel {
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+  }
+
+  /* Without backdrop-filter the panel would be a barely-there wash over a busy
+     photograph, so it falls back to near-solid charcoal. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-panel {
+      background-color: rgba(15, 23, 42, 0.88);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-kenburns {
+      animation: none;
+      transform: scale(1.04);
+    }
+
+    .hero-scrim {
+      animation: none;
+      --hero-veil: 72%;
+    }
+  }
+}
+
+@layer utilities {
+  /*
+   * Engineering grid. Drawn with gradients so there's no image request,
+   * and masked at the edges so it reads as a drafting surface rather than
+   * as wallpaper.
+   */
+  .bg-engineering-grid {
+    background-image:
+      linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-engineering-grid-fine {
+    background-image:
+      linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+
+  .mask-fade-edges {
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse at center, #000 45%, transparent 100%);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Tabular figures so metrics don't jitter while counting. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Hides the scrollbar on the horizontal filter rail without disabling scroll. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Range inputs. Deliberately outside @layer utilities: vendor thumb
+ * pseudo-elements can't be reached through Tailwind's variants and need
+ * real nested selectors.
+ */
+.range-track {
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--line);
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.range-track::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: var(--surface);
+  border: 3px solid var(--amber);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.22);
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.range-track::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: var(--surface);
+  border: 3px solid var(--amber);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.22);
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.range-track:hover::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+.range-track:hover::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
+.range-track:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.2);
+}
+
+.range-track:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.2);
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * BuildingScene choreography
+ * ---------------------------------------------------------------------------
+ * The scene's stage index is written to `data-stage` (plus cumulative boolean
+ * flags) on the wrapper by ScrollBuildingStory, which reads scroll position
+ * through useScrollScene — IntersectionObserver-gated, rAF-coalesced, and
+ * bounded to its own <section>. Nothing here binds to global window scroll.
+ *
+ * Every rule below is scoped under `.bs-scene`, so no other section of the
+ * site can be reached by these selectors.
+ *
+ * Geometry the poses depend on, in viewBox units:
+ *   ground line 620 · beam grid 556 · slab bottom 560
+ *   new grade beam top 410  ⇒  lift travel = 150
+ *   slab x 470 → new pier line 525  ⇒  shift travel = 55
+ */
+
+.bs-scene {
+  /* transform-box: view-box keeps `px` in these rules equal to viewBox units. */
+  --bs-lift: 0px;
+  --bs-shift: 0px;
+}
+
+.bs-scene [class^="bs-"],
+.bs-scene [class*=" bs-"] {
+  transform-box: view-box;
+  transform-origin: center;
+  transition:
+    opacity 600ms ease,
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The building is one rigid body: a single transform carries slab, walls,
+   openings and roof together, so nothing can shear apart mid-lift. */
+.bs-scene .bs-structure,
+.bs-scene .bs-beams {
+  transform: translate(var(--bs-shift), var(--bs-lift));
+}
+
+.bs-scene[data-lifted="in"] {
+  --bs-lift: -150px;
+}
+
+.bs-scene[data-shifted="in"] {
+  --bs-shift: 55px;
+}
+
+/* --- Stage 0: the problem. Road is high, water is at the door. --- */
+.bs-scene .bs-flood {
+  opacity: 1;
+  transform: translateY(6px);
+}
+
+.bs-scene .bs-flood-wave {
+  animation: bs-swell 5s ease-in-out infinite;
+}
+
+/* --- Stage 0 only: laser survey overlay --- */
+.bs-scene[data-stage="0"] .bs-inspect {
+  opacity: 1;
+}
+
+.bs-scene[data-stage="0"] .bs-scanline {
+  animation: bs-scan 2.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* --- Stage 1: needle beams thread in from the left --- */
+.bs-scene .bs-beams {
+  opacity: 0;
+}
+
+.bs-scene[data-beams="in"] .bs-beams {
+  opacity: 1;
+}
+
+/* Before they are seated the beams sit off to the side, so switching the flag
+   reads as "slid into place" rather than "faded in". */
+.bs-scene:not([data-beams="in"]) .bs-beams {
+  transform: translateX(-90px);
+}
+
+/* --- Stage 2: jacks arrive; stage 3+: rods extend to carry the lift --- */
+.bs-scene .bs-jacks {
+  opacity: 0;
+}
+
+.bs-scene[data-jacks="in"] .bs-jacks {
+  opacity: 1;
+}
+
+.bs-scene .bs-jack-rod {
+  /* Grows from its own base, so the cylinder extends instead of sliding. */
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(1);
+}
+
+.bs-scene[data-lifted="in"] .bs-jack-rod {
+  /* 30 units of stroke → 180, i.e. the 150 units of travel. */
+  transform: scaleY(6);
+}
+
+/* Once the load is on permanent columns the plant comes out. */
+.bs-scene[data-done="in"] .bs-jacks,
+.bs-scene[data-done="in"] .bs-beams,
+.bs-scene[data-done="in"] .bs-rails {
+  opacity: 0;
+}
+
+/* --- Stage 3: dust kicks up under the slab while it moves --- */
+.bs-scene[data-stage="3"] .bs-dust {
+  opacity: 1;
+}
+
+.bs-scene[data-stage="3"] .bs-dust-p {
+  animation: bs-drift 2.2s ease-out infinite;
+}
+
+.bs-scene .bs-dust-p:nth-child(2) {
+  animation-delay: 0.35s;
+}
+
+.bs-scene .bs-dust-p:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+.bs-scene .bs-dust-p:nth-child(4) {
+  animation-delay: 1.05s;
+}
+
+.bs-scene .bs-dust-p:nth-child(5) {
+  animation-delay: 1.4s;
+}
+
+/* --- Stage 4: rails and rollers for the horizontal move --- */
+.bs-scene[data-shifted="in"]:not([data-done="in"]) .bs-rails {
+  opacity: 1;
+}
+
+/* --- Stage 5: new piers and grade beam cast beneath --- */
+.bs-scene[data-placed="in"] .bs-newfoundation {
+  opacity: 1;
+}
+
+.bs-scene:not([data-placed="in"]) .bs-newfoundation {
+  transform: translateY(18px);
+}
+
+/* --- Stage 6: permanent columns, spirit level, warm daylight --- */
+.bs-scene[data-done="in"] .bs-stilt {
+  opacity: 1;
+}
+
+.bs-scene[data-done="in"] .bs-level {
+  opacity: 1;
+}
+
+.bs-scene[data-done="in"] .bs-warm {
+  opacity: 0.32;
+}
+
+.bs-scene .bs-level-bubble {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.bs-scene[data-done="in"] .bs-level-bubble {
+  animation: bs-settle 1.6s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
+@keyframes bs-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(180px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.15;
+  }
+}
+
+@keyframes bs-swell {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-24px);
+  }
+}
+
+@keyframes bs-drift {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-14px, -34px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes bs-settle {
+  0% {
+    transform: translateX(-13px);
+  }
+  45% {
+    transform: translateX(9px);
+  }
+  75% {
+    transform: translateX(-4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/*
+ * Reduced motion: hold the finished pose. The stages still advance in the
+ * copy alongside, so no information is carried by movement alone.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .bs-scene .bs-flood-wave,
+  .bs-scene .bs-scanline,
+  .bs-scene .bs-dust-p,
+  .bs-scene .bs-level-bubble {
+    animation: none !important;
+  }
+
+  .bs-scene .bs-dust {
+    opacity: 0 !important;
+  }
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Storyboard section primitives
+ * ---------------------------------------------------------------------------
+ * Used only by the pinned GSAP storyboard (ui/ScrollBuildingStory). Declared
+ * here rather than inline so the component's markup stays byte-identical to
+ * the authored source. Values are lifted from the existing sections so the
+ * storyboard sits flush with the rest of the page.
+ */
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-x {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .section-label {
+    font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-subtle);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding-inline: 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      box-shadow 200ms ease,
+      transform 200ms ease;
+  }
+
+  .btn-primary {
+    background-color: var(--amber);
+    color: #ffffff;
+    box-shadow: 0 8px 24px -6px rgba(217, 119, 6, 0.35);
+  }
+
+  .btn-primary:hover {
+    background-color: #b45309;
+  }
+
+  .btn-secondary {
+    background-color: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line-strong);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--surface-sunken);
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
