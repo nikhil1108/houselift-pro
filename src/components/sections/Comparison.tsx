@@ -22,7 +22,7 @@ export function Comparison(): JSX.Element {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="Same house, new datum"
+            eyebrow="Same house, new level"
             title="Watch what six feet changes"
             description="The whole job in fourteen seconds — survey, needle beams, jacks, the lift itself, then the new plinth. The structure is never opened and the finishes are never touched. Only the level below it changes."
             className="max-w-2xl"
