@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Expand, MapPin } from "lucide-react";
+import { ArrowUpRight, Camera, Expand, MapPin } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 import {
@@ -160,6 +160,14 @@ export function Gallery(): JSX.Element {
                     <MapPin className="h-3 w-3 text-amber-600" aria-hidden />
                     {project.location}
                   </span>
+
+                  {/* Multi-photo badge */}
+                  {project.photos && project.photos.length > 1 && (
+                    <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-sm bg-ink/85 px-2 py-1 font-mono text-[10px] font-semibold text-white backdrop-blur-sm">
+                      <Camera className="h-3 w-3 text-amber-400" aria-hidden />
+                      {project.photos.length} Photos
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex flex-1 flex-col p-4 sm:p-5">

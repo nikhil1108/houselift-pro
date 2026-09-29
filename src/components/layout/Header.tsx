@@ -1,6 +1,8 @@
 "use client";
 
 import { Menu, Phone, ShieldCheck, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { CONTACT_INFO, NAV_LINKS } from "@/components/data/mockData";
@@ -17,6 +19,8 @@ import { cn, telHref } from "@/lib/utils";
 export function Header(): JSX.Element {
   const { sentinelRef, scrolled } = useScrolled();
   const scrollToAnchor = useAnchorScroll();
+  const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   // Lock body scroll while the mobile drawer is open, restoring whatever the
@@ -35,9 +39,24 @@ export function Header(): JSX.Element {
   const handleNavigate = useCallback(
     (href: string): void => {
       setMenuOpen(false);
-      scrollToAnchor(href);
+      if (href.startsWith("/")) {
+        router.push(href);
+        return;
+      }
+      if (href.startsWith("#")) {
+        if (pathname === "/") {
+          if (href === "#hero") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.history.replaceState(null, "", "/");
+          } else {
+            scrollToAnchor(href);
+          }
+        } else {
+          router.push(`/${href === "#hero" ? "" : href}`);
+        }
+      }
     },
-    [scrollToAnchor],
+    [pathname, router, scrollToAnchor],
   );
 
   return (
@@ -131,11 +150,14 @@ export function Header(): JSX.Element {
             aria-label="Primary"
             className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8"
           >
-            <a
-              href="#hero"
+            <Link
+              href="/"
               onClick={(event) => {
-                event.preventDefault();
-                handleNavigate("#hero");
+                if (pathname === "/") {
+                  event.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  window.history.replaceState(null, "", "/");
+                }
               }}
               className="flex shrink-0 items-center gap-3 rounded"
             >
@@ -148,23 +170,44 @@ export function Header(): JSX.Element {
                   Building Solution PVT LTD
                 </span>
               </span>
-            </a>
+            </Link>
 
             <ul className="hidden flex-1 items-center justify-center gap-1 xl:gap-2.5 lg:flex">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleNavigate(link.href);
-                    }}
-                    className="whitespace-nowrap rounded px-2.5 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-ink"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const isRoute = link.href.startsWith("/");
+                const isActive = isRoute && pathname === link.href;
+
+                return (
+                  <li key={link.href}>
+                    {isRoute ? (
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "whitespace-nowrap rounded px-2.5 py-1.5 text-sm font-medium transition-colors",
+                          isActive
+                            ? "bg-amber-100/70 text-amber-900 font-semibold"
+                            : "text-slate-600 hover:bg-slate-100 hover:text-ink",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={pathname === "/" ? link.href : `/${link.href}`}
+                        onClick={(event) => {
+                          if (pathname === "/") {
+                            event.preventDefault();
+                            handleNavigate(link.href);
+                          }
+                        }}
+                        className="whitespace-nowrap rounded px-2.5 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-ink"
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0 xl:gap-3">
@@ -247,24 +290,50 @@ export function Header(): JSX.Element {
         >
           <div className="overflow-hidden">
             <ul className="mx-auto max-w-7xl px-4 py-2 sm:px-6">
-              {NAV_LINKS.map((link, index) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    tabIndex={menuOpen ? undefined : -1}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleNavigate(link.href);
-                    }}
-                    className="flex items-center justify-between border-b border-slate-100 py-3.5 text-sm font-medium text-slate-700 transition-colors last:border-b-0 hover:text-amber-700"
-                  >
-                    {link.label}
-                    <span className="font-mono text-xs text-slate-400">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </a>
-                </li>
-              ))}
+              {NAV_LINKS.map((link, index) => {
+                const isRoute = link.href.startsWith("/");
+                const isActive = isRoute && pathname === link.href;
+
+                return (
+                  <li key={link.href}>
+                    {isRoute ? (
+                      <Link
+                        href={link.href}
+                        tabIndex={menuOpen ? undefined : -1}
+                        onClick={() => setMenuOpen(false)}
+                        className={cn(
+                          "flex items-center justify-between border-b border-slate-100 py-3.5 text-sm font-semibold transition-colors last:border-b-0",
+                          isActive ? "text-amber-600" : "text-slate-700 hover:text-amber-700",
+                        )}
+                      >
+                        <span>{link.label}</span>
+                        <span className="font-mono text-xs text-slate-400">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={pathname === "/" ? link.href : `/${link.href}`}
+                        tabIndex={menuOpen ? undefined : -1}
+                        onClick={(event) => {
+                          if (pathname === "/") {
+                            event.preventDefault();
+                            handleNavigate(link.href);
+                          } else {
+                            setMenuOpen(false);
+                          }
+                        }}
+                        className="flex items-center justify-between border-b border-slate-100 py-3.5 text-sm font-medium text-slate-700 transition-colors last:border-b-0 hover:text-amber-700"
+                      >
+                        <span>{link.label}</span>
+                        <span className="font-mono text-xs text-slate-400">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="mx-auto max-w-7xl px-4 pb-5 sm:px-6">

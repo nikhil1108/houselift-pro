@@ -10,8 +10,8 @@ import { resolveIcon } from "@/lib/icons";
 
 /** Load rating shown on each card, so the grid carries data and not just copy. */
 const CAPABILITY: Record<string, { metric: string; unit: string }> = {
-  "hydraulic-lifting": { metric: "2–10", unit: "ft lift range" },
-  "building-relocation": { metric: "18", unit: "m max shift" },
+  "hydraulic-lifting": { metric: "2–14", unit: "ft lift range" },
+  "building-relocation": { metric: "250", unit: "m max" },
   "foundation-repair": { metric: "±2", unit: "mm tolerance" },
   "commercial-elevation": { metric: "15,000", unit: "T capacity" },
 };

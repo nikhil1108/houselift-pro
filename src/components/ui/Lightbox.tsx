@@ -1,9 +1,11 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
-import { useCallback, useEffect, useRef } from "react";
+import { Camera, ChevronLeft, ChevronRight, MapPin, X } from "lucide-react";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ProjectPlate } from "@/components/ui/ProjectPlate";
+import { cn } from "@/lib/utils";
 import type { GalleryProject } from "@/types";
 
 interface LightboxProps {
@@ -36,6 +38,21 @@ export function Lightbox({
   const closeRef = useRef<HTMLButtonElement>(null);
   /** Element that had focus before opening, so it can be restored on close. */
   const restoreRef = useRef<HTMLElement | null>(null);
+
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  // Reset to the first photo whenever switching to a different project
+  useEffect(() => {
+    setPhotoIndex(0);
+  }, [project.id]);
+
+  const photos =
+    project.photos && project.photos.length > 0
+      ? project.photos
+      : project.photo
+      ? [project.photo]
+      : [];
+  const currentPhoto = photos[photoIndex] ?? project.photo;
 
   useEffect(() => {
     restoreRef.current = document.activeElement as HTMLElement | null;
@@ -128,7 +145,7 @@ export function Lightbox({
         <div className="relative aspect-[16/10] shrink-0 bg-slate-100 lg:w-[62%]">
           <ProjectPlate
             scene={project.scene}
-            photo={project.photo}
+            photo={currentPhoto}
             alt={`${project.title} — ${project.location}`}
             className="h-full w-full object-cover"
           />
@@ -136,6 +153,33 @@ export function Lightbox({
           <span className="absolute left-4 top-4 rounded bg-ink/85 px-2.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
             {project.index}
           </span>
+
+          {photos.length > 1 && (
+            <span className="absolute right-4 top-4 flex items-center gap-1.5 rounded bg-ink/85 px-2.5 py-1 font-mono text-xs font-semibold tracking-wider text-white backdrop-blur-sm">
+              <Camera className="h-3.5 w-3.5 text-amber-400" />
+              Photo {photoIndex + 1} / {photos.length}
+            </span>
+          )}
+
+          {/* Photo indicator dots when multiple photos exist */}
+          {photos.length > 1 && (
+            <div className="absolute inset-x-0 bottom-4 z-10 flex items-center justify-center gap-2">
+              {photos.map((p, idx) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => setPhotoIndex(idx)}
+                  aria-label={`View photo ${idx + 1} of ${photos.length}`}
+                  className={cn(
+                    "h-2.5 rounded-full transition-all duration-300",
+                    idx === photoIndex
+                      ? "w-8 bg-amber-500 shadow-sm"
+                      : "w-2.5 bg-white/70 shadow-sm hover:bg-white",
+                  )}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Paging controls, overlaid on the plate */}
           <div className="absolute inset-x-4 top-1/2 flex -translate-y-1/2 justify-between">
@@ -197,6 +241,43 @@ export function Lightbox({
               </div>
             ))}
           </dl>
+
+          {/* Multi-photo thumbnail selector */}
+          {photos.length > 1 && (
+            <div className="mt-5 border-t border-slate-100 pt-4">
+              <h4 className="mb-2.5 flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <Camera className="h-3.5 w-3.5 text-amber-600" />
+                Site Photos ({photos.length})
+              </h4>
+              <div className="flex flex-wrap gap-2.5">
+                {photos.map((p, idx) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setPhotoIndex(idx)}
+                    aria-label={`Switch to photo ${idx + 1}`}
+                    className={cn(
+                      "relative h-16 w-20 overflow-hidden rounded-lg border-2 transition-all duration-200 sm:h-20 sm:w-24",
+                      idx === photoIndex
+                        ? "scale-105 border-amber-600 shadow-md ring-2 ring-amber-600/30"
+                        : "border-slate-200 opacity-60 hover:border-slate-400 hover:opacity-100",
+                    )}
+                  >
+                    <Image
+                      src={p}
+                      alt={`${project.title} photo ${idx + 1}`}
+                      fill
+                      sizes="100px"
+                      className="object-cover"
+                    />
+                    <span className="absolute bottom-1 right-1 rounded bg-ink/80 px-1 py-0.5 font-mono text-[9px] font-bold leading-none text-white">
+                      #{idx + 1}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <p className="mt-auto pt-6 font-mono text-xs text-slate-400">
             {position} / {total} · Use ← → to browse

@@ -15,6 +15,8 @@ import {
   InstagramOriginalIcon,
   YoutubeOriginalIcon,
 } from "@/components/ui/SocialIcons";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useAnchorScroll } from "@/hooks/useAnchorScroll";
 import { telHref } from "@/lib/utils";
 
@@ -67,6 +69,22 @@ const SERVICE_STATES: string[] = [
 
 export function Footer(): JSX.Element {
   const scrollToAnchor = useAnchorScroll();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavigate = (href: string): void => {
+    if (href.startsWith("/")) {
+      router.push(href);
+      return;
+    }
+    if (href.startsWith("#")) {
+      if (pathname === "/") {
+        scrollToAnchor(href);
+      } else {
+        router.push(`/${href}`);
+      }
+    }
+  };
 
   return (
     <footer className="relative overflow-hidden bg-ink text-slate-300">
@@ -165,26 +183,42 @@ export function Footer(): JSX.Element {
               Explore
             </h2>
             <ul className="mt-5 space-y-3">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      scrollToAnchor(link.href);
-                    }}
-                    className="text-sm text-slate-400 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const isRoute = link.href.startsWith("/");
+                return (
+                  <li key={link.href}>
+                    {isRoute ? (
+                      <Link
+                        href={link.href}
+                        className="text-sm text-slate-400 transition-colors hover:text-white"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={pathname === "/" ? link.href : `/${link.href}`}
+                        onClick={(event) => {
+                          if (pathname === "/") {
+                            event.preventDefault();
+                            handleNavigate(link.href);
+                          }
+                        }}
+                        className="text-sm text-slate-400 transition-colors hover:text-white"
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
               <li>
                 <a
-                  href="#quote"
+                  href={pathname === "/" ? "#quote" : "/#quote"}
                   onClick={(event) => {
-                    event.preventDefault();
-                    scrollToAnchor("#quote");
+                    if (pathname === "/") {
+                      event.preventDefault();
+                      handleNavigate("#quote");
+                    }
                   }}
                   className="inline-flex items-center gap-1 text-sm font-medium text-white transition-colors hover:text-amber-400"
                 >
@@ -204,10 +238,12 @@ export function Footer(): JSX.Element {
               {SERVICES.map((service) => (
                 <li key={service.id}>
                   <a
-                    href="#services"
+                    href={pathname === "/" ? "#services" : "/#services"}
                     onClick={(event) => {
-                      event.preventDefault();
-                      scrollToAnchor("#services");
+                      if (pathname === "/") {
+                        event.preventDefault();
+                        handleNavigate("#services");
+                      }
                     }}
                     className="text-sm text-slate-400 transition-colors hover:text-white"
                   >

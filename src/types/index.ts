@@ -150,6 +150,10 @@ export interface GalleryProject {
    * never shows a broken frame.
    */
   photo?: string;
+  /**
+   * Additional site photographs for multi-photo project plates.
+   */
+  photos?: readonly string[];
   /** Plate aspect. The masonry rhythm alternates between the two. */
   ratio: "16:9" | "4:3";
   /** Short technical caption shown under the plate and in the lightbox. */

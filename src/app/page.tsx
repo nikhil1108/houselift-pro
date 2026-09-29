@@ -44,11 +44,8 @@ export default function HomePage(): JSX.Element {
             #simulator anchor for the header's Simulator link. */}
         <ScrolableAnimation />
 
-
-        {/* Ten documented plates with lightbox. */}
+        {/* Ten documented plates with lightbox: Ten sites, documented end to end */}
         <Gallery />
-
-
 
         {/* Sticky blueprint: how the lift is sequenced. */}
         <ProcessTimeline />

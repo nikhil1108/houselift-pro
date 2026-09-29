@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import BuildingScene from "@/components/ui/BuildingScene";
@@ -233,15 +234,9 @@ export default function ScrolableAnimation() {
               </a>
             </Button>
             <Button asChild variant="outline">
-              <a
-                href="#gallery"
-                onClick={(event) => {
-                  event.preventDefault();
-                  scrollToAnchor("#gallery");
-                }}
-              >
+              <Link href="/gallery">
                 See Completed Projects
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
@@ -272,70 +267,71 @@ export default function ScrolableAnimation() {
           </span>
         </div>
 
-        {/* Building scene */}
-        <div className="absolute inset-0 grid place-items-center px-4 pb-20 sm:pb-0 overflow-hidden w-full max-w-full min-w-0">
+        {/* Building scene — pb-28 on mobile lifts the road and house upward away from the bottom caption card */}
+        <div className="absolute inset-0 grid place-items-center px-4 pb-28 sm:pb-0 overflow-hidden w-full max-w-full min-w-0">
           <BuildingScene ref={sceneRef} className="h-auto w-full max-w-[900px] min-w-0" />
         </div>
 
-        {/* Captions — cross-faded; only the active one is shown to AT */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-10 z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative min-h-[105px] sm:min-h-[132px] w-full max-w-xl">
-            {STAGES.map((s, i) => (
-              <div
-                key={s.id}
-                aria-hidden={i !== active}
-                className="absolute inset-0 transition-all duration-500 ease-engineer"
-                style={{
-                  opacity: i === active ? 1 : 0,
-                  transform: i === active ? "translateY(0)" : "translateY(12px)",
-                }}
-              >
-                <p className="font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700">
-                  {s.label}
-                </p>
-                <h3 className="mt-1.5 sm:mt-2 text-balance text-lg font-bold leading-[1.15] tracking-tight text-ink sm:text-2xl lg:text-3xl">
-                  {s.title}
-                </h3>
-                <p className="mt-1.5 sm:mt-2.5 max-w-md text-pretty text-xs sm:text-base leading-relaxed text-ink-muted">
-                  {s.text}
-                </p>
-              </div>
-            ))}
-          </div>
+        {/* Captions — protected by high-contrast backdrop card with blur so text is 100% readable over road, water and ground */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-10 z-20 mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8">
+          <div className="pointer-events-auto w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white/95 p-4 sm:p-6 shadow-xl backdrop-blur-md">
+            <div className="grid grid-cols-1 grid-rows-1 w-full">
+              {STAGES.map((s, i) => (
+                <div
+                  key={s.id}
+                  aria-hidden={i !== active}
+                  className="col-start-1 row-start-1 transition-all duration-500 ease-engineer"
+                  style={{
+                    opacity: i === active ? 1 : 0,
+                    transform: i === active ? "translateY(0)" : "translateY(8px)",
+                    pointerEvents: i === active ? "auto" : "none",
+                    visibility: i === active ? "visible" : "hidden",
+                  }}
+                >
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-2.5 py-0.5 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-amber-800">
+                    Stage {i + 1}: {s.label}
+                  </span>
+                  <h3 className="mt-1.5 text-balance text-base sm:text-2xl font-bold leading-snug tracking-tight text-ink">
+                    {s.title}
+                  </h3>
+                  <p className="mt-1 sm:mt-2 max-w-md text-pretty text-xs sm:text-sm leading-relaxed text-slate-600">
+                    {s.text}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-          {/* Result-stage CTAs */}
-          <div
-            className="mt-3 sm:mt-4 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3 transition-opacity duration-500"
-            style={{
-              opacity: active === STAGES.length - 1 ? 1 : 0,
-              pointerEvents: active === STAGES.length - 1 ? "auto" : "none",
-            }}
-          >
-            <Button asChild className="w-full sm:w-auto">
-              <a
-                href="#quote"
-                tabIndex={active === STAGES.length - 1 ? undefined : -1}
-                onClick={(event) => {
-                  event.preventDefault();
-                  scrollToAnchor("#quote");
-                }}
-              >
-                Request a Site Inspection
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </Button>
-            <Button asChild variant="outline" className="w-full sm:w-auto">
-              <a
-                href="#gallery"
-                tabIndex={active === STAGES.length - 1 ? undefined : -1}
-                onClick={(event) => {
-                  event.preventDefault();
-                  scrollToAnchor("#gallery");
-                }}
-              >
-                See Completed Projects
-              </a>
-            </Button>
+            {/* Result-stage CTAs */}
+            <div
+              className="mt-3 sm:mt-4 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3 transition-opacity duration-500"
+              style={{
+                opacity: active === STAGES.length - 1 ? 1 : 0,
+                pointerEvents: active === STAGES.length - 1 ? "auto" : "none",
+                display: active === STAGES.length - 1 ? "flex" : "none",
+              }}
+            >
+              <Button asChild className="w-full sm:w-auto">
+                <a
+                  href="#quote"
+                  tabIndex={active === STAGES.length - 1 ? undefined : -1}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToAnchor("#quote");
+                  }}
+                >
+                  Request a Site Inspection
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="w-full sm:w-auto">
+                <Link
+                  href="/gallery"
+                  tabIndex={active === STAGES.length - 1 ? undefined : -1}
+                >
+                  See Completed Projects
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
 
