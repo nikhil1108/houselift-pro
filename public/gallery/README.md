@@ -13,7 +13,7 @@ If a photo does not show up, check the filename against this list first.
 |---|-----------------------------|----------------------------------------------|-------|
 | 01| `01-raised-house.jpg`       | 2-storey house raised above flood level, Kochi| 16:9 |
 | 02| `02-jack-array.jpg`         | Jack array under foundation beams, Babain     | 4:3  |
-| 03| `03-commercial-block.jpg`   | Commercial complex elevation, Patna           | 16:9 |
+| 03| `03-commercial-elevation.jpg`   | 4-storey commercial building elevation, Heria| 4:3 |
 | 04| `04-heritage.jpg`           | Heritage haveli lift, Amritsar                | 4:3  |
 | 05| `05-jack-closeup.jpg`       | 100-ton jack cylinder mid-stroke              | 4:3  |
 | 06| `06-before-after.jpg`       | Before/after road-height comparison, Chennai  | 16:9 |

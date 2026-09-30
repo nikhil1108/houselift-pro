@@ -512,25 +512,23 @@ export const GALLERY_PROJECTS: GalleryProject[] = [
   {
     id: "g03",
     index: "03",
-    title: "Commercial Complex Elevation Without Demolition",
-    location: "Haridwar, Uttar Pradesh",
+    title: "4-Storey Commercial Building Elevation Without Demolition",
+    location: "Heria, West Bengal",
     category: "commercial",
     scene: "commercial-block",
-    photo: "/gallery/03-haridwar-1.jpg",
+    photo: "/gallery/03-commercial-elevation.jpg",
     photos: [
-      "/gallery/03-haridwar-1.jpg",
-      "/gallery/03-haridwar-2.jpg",
-      "/gallery/03-haridwar-3.jpg",
-      "/gallery/03-haridwar-4.jpg",
+      "/gallery/03-commercial-elevation.jpg",
+      "/gallery/03-commercial-elevation-tall.jpg",
     ],
-    ratio: "16:9",
+    ratio: "4:3",
     caption:
-      "A three-storey commercial complex lifted on reinforced brick piers and synchronized mechanical jacks without business disruption in Haridwar, Uttar Pradesh.",
+      "A 4-storey commercial building (Sumit & Krishna Printers) elevated on heavy-duty brick piers and synchronized mechanical jacks without business disruption in Heria, West Bengal.",
     specs: [
       { label: "Lift height", value: "8.5 ft / 2,590 mm" },
-      { label: "Structure", value: "3-Storey Commercial Block" },
-      { label: "Support type", value: "Reinforced brick columns" },
-      { label: "Location", value: "Haridwar, Uttar Pradesh" },
+      { label: "Structure", value: "4-Storey Commercial Building" },
+      { label: "Support type", value: "Synchronized jacks & brick piers" },
+      { label: "Location", value: "Heria, West Bengal" },
     ],
   },
   {
@@ -731,23 +729,13 @@ export const SITE_PHOTOS: SitePhoto[] = [
   },
   {
     id: "p03-a",
-    src: "/gallery/03-haridwar-1.jpg",
-    alt: "Three-storey commercial complex elevated on tall brick pier columns in Haridwar, Uttar Pradesh (Wide Perspective)",
+    src: "/gallery/03-commercial-elevation.jpg",
+    alt: "4-storey commercial building elevated on synchronized jacks and heavy brick piers in Heria, West Bengal",
   },
   {
     id: "p03-b",
-    src: "/gallery/03-haridwar-2.jpg",
-    alt: "Commercial building after completion of structural lift in Haridwar, Uttar Pradesh",
-  },
-  {
-    id: "p03-c",
-    src: "/gallery/03-haridwar-3.jpg",
-    alt: "Street view showing the elevation height of commercial block in Haridwar, Uttar Pradesh",
-  },
-  {
-    id: "p03-d",
-    src: "/gallery/03-haridwar-4.jpg",
-    alt: "Brick pier supports constructed under lifted commercial complex in Haridwar, Uttar Pradesh",
+    src: "/gallery/03-commercial-elevation-tall.jpg",
+    alt: "Full vertical elevation perspective of 4-storey commercial building lifted above ground level in Heria, West Bengal",
   },
   {
     id: "p04-newspaper",
