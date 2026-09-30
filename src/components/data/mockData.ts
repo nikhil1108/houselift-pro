@@ -607,7 +607,6 @@ export const GALLERY_PROJECTS: GalleryProject[] = [
     photo: "/gallery/07-rcc-pillar.jpg",
     photos: [
       "/gallery/07-rcc-pillar.jpg",
-      "/gallery/07-rcc-detail.jpg",
     ],
     ratio: "4:3",
     caption:

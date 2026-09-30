@@ -16,7 +16,7 @@ const TRUST_BADGES: ReadonlyArray<{ value: number; suffix: string; label: string
   // "Combined" is load-bearing: it's the two founders' experience added
   // together, not the firm's age. RR AND SONS was established in 2013.
   { value: 20, suffix: "+ Years", label: "Combined Experience" },
-  { value: 1500, suffix: "+", label: "Houses Lifted" },
+  { value: 2500, suffix: "+", label: "Houses Lifted" },
   { value: 0, suffix: " Damage", label: "Zero Damage Record" },
   { value: 10, suffix: "-Year", label: "Structural Warranty with 1 year insurance" },
 ];
@@ -76,7 +76,7 @@ export function Hero(): JSX.Element {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 motion-reduce:hidden" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
                 </span>
-                Now surveying across 20+ states
+                Now surveying across 25+ states
               </Badge>
             </Reveal>
 

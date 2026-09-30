@@ -102,7 +102,7 @@ export default function GalleryPage(): JSX.Element {
                   <ShieldCheck className="h-4 w-4" />
                   <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">Track Record</span>
                 </div>
-                <div className="mt-1 font-mono text-xl sm:text-2xl font-bold text-white">1500+</div>
+                <div className="mt-1 font-mono text-xl sm:text-2xl font-bold text-white">2500+</div>
                 <p className="mt-0.5 text-xs text-slate-400">Structures lifted safely</p>
               </div>
 
