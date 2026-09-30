@@ -58,7 +58,7 @@ export const CONTACT_INFO: ContactInfo = {
   // TODO(owner): confirm which number is on WhatsApp. Defaulted to the primary
   // line — if WhatsApp sits on a different handset, the chat buttons in the
   // hero, quote form and floating actions all silently go to the wrong place.
-  whatsapp: "+918053743181",
+  whatsapp: "+919494160000",
   email: "buildinglifting83@gmail.com",
   addressLines: ADDRESS_LINES,
   addressLine: ADDRESS_LINES.join(", "),
