@@ -76,7 +76,7 @@ export function Hero(): JSX.Element {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 motion-reduce:hidden" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
                 </span>
-                Now surveying across 12 states
+                Now surveying across 20+ states
               </Badge>
             </Reveal>
 

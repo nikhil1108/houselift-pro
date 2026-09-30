@@ -99,7 +99,7 @@ export function Header(): JSX.Element {
             <div className="hidden items-center gap-4 sm:flex">
               <span className="hidden items-center gap-2 md:flex">
                 <ShieldCheck className="h-3.5 w-3.5 text-amber-500" />
-                1500+ Houses Lifted Across India
+                2500+ Houses Lifted Across India
               </span>
 
               {/* Social icons in top helpline bar - authentic brand logos */}
