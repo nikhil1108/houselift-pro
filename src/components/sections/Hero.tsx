@@ -95,7 +95,7 @@ export function Hero(): JSX.Element {
 
             <Reveal delayMs={140}>
               <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-slate-200 [text-shadow:0_1px_12px_rgba(15,23,42,0.5)] sm:text-lg">
-                Synchronised mechanical jacks raise your entire structure 2 to 10
+                Synchronised mechanical jacks raise your entire structure 2 to 14
                 feet, held to ±2&nbsp;mm across every jack point, while we cast a
                 new RCC foundation beneath it. You keep your house, your walls and
                 your finishes — you just gain height.
