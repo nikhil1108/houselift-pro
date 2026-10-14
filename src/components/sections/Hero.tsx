@@ -84,7 +84,7 @@ export function Hero(): JSX.Element {
               <h1 className="mt-6 text-balance text-[2.1rem] font-bold leading-[1.08] tracking-tight text-white [text-shadow:0_1px_24px_rgba(15,23,42,0.5)] sm:text-5xl lg:text-[3.4rem]">
                 Elevate Your Home Above Road Floods &amp; Waterlogging{" "}
                 <span className="relative text-amber-400">
-                  Without Demolition.
+                  Without Demolition
                   <span
                     aria-hidden
                     className="absolute inset-x-0 -bottom-1 h-[3px] bg-amber-400/40"

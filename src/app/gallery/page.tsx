@@ -20,9 +20,9 @@ import { SitePhotos } from "@/components/sections/SitePhotos";
 import { buildWhatsAppLink, telHref } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Site Photo Gallery & Field Operations Archive | RR and Sons Building Solution",
+  title: "House Lifting Photo Gallery & Proof",
   description:
-    "Direct unedited field photographs of house lifting, building relocation, and foundation repairs across India. Inspect real mechanical jacks under load, RCC pillars, and national media coverage.",
+    "Explore authentic site photos of 2,500+ house lifting and building shifting projects across India. Inspect real mechanical jack arrays and RCC column work.",
   keywords: [
     "house lifting gallery",
     "building shifting photos",
@@ -30,15 +30,66 @@ export const metadata: Metadata = {
     "house lifting photos India",
     "Salem house lift",
     "Kolkata house lift",
-    "Haridwar house lift",
+    "Heria commercial building lift",
     "temple lifting photos",
     "RCC beam jacketing",
+    "minaret shifting Nagaon Assam",
+  ],
+  alternates: {
+    canonical: "/gallery",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://myhouselifting.com/gallery",
+    siteName: "RR and Sons Building Solution PVT LTD | MyHouseLifting.com",
+    title: "House Lifting Photo Gallery & Proof | RR and Sons",
+    description:
+      "Explore authentic site photos of 2,500+ house lifting and building shifting projects across India. Inspect real mechanical jack arrays and RCC column work.",
+    images: [
+      {
+        url: "/gallery/01-salem-wide.jpg",
+        width: 1200,
+        height: 630,
+        alt: "House Lifting Field Operations Archive - RR and Sons",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "House Lifting Photo Gallery & Proof | RR and Sons",
+    description:
+      "Explore authentic site photos of 2,500+ house lifting and building shifting projects across India. Inspect real mechanical jack arrays and RCC column work.",
+    images: ["/gallery/01-salem-wide.jpg"],
+  },
+};
+
+const galleryBreadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://myhouselifting.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Gallery",
+      item: "https://myhouselifting.com/gallery",
+    },
   ],
 };
 
 export default function GalleryPage(): JSX.Element {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(galleryBreadcrumbSchema) }}
+      />
       <a
         href="#gallery-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-amber-600 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"

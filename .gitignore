@@ -43,3 +43,6 @@ next-env.d.ts
 # local leads audit data (root level only, never src/components/data)
 /data/*
 !/data/leads.json
+
+# test reports
+*-report.json
